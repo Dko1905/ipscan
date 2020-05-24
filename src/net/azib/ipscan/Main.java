@@ -10,7 +10,6 @@ import net.azib.ipscan.di.Injector;
 import net.azib.ipscan.gui.GUI;
 import net.azib.ipscan.gui.InfoDialog;
 import net.azib.ipscan.gui.MacApplicationMenu;
-import net.azib.ipscan.util.GoogleAnalytics;
 
 import java.security.Security;
 import java.util.Locale;
@@ -64,12 +63,10 @@ public class Main {
 		}
 		catch (UnsatisfiedLinkError e) {
 			e.printStackTrace();
-			new GoogleAnalytics().report(e);
 			swingErrorDialog("Failed to load native code: " + e.getMessage() + "\n\nProbably you are using a binary built for wrong OS or CPU. If 64-bit binary doesn't work for you, try 32-bit version, or vice versa.");
 		}
 		catch (NoClassDefFoundError e) {
 			e.printStackTrace();
-			new GoogleAnalytics().report(e);
 			swingErrorDialog("SWT GUI toolkit not available: " + e.toString() + "\n\nIf you are using platform-neutral build, make sure you provide SWT built for your platform manually (e.g. install libswt packages), or please use a platform specific binary.");
 		}
 		catch (Throwable e) {
@@ -79,7 +76,6 @@ public class Main {
 
 	private static void handleFatalError(GUI gui, Throwable e) {
 		e.printStackTrace();
-		new GoogleAnalytics().report(e);
 		if (gui != null)
 			gui.showMessage(0, "Fatal Error", e + "\nPlease submit a bug report mentioning your OS and what exactly were you doing.");
 		else

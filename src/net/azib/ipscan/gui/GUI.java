@@ -4,7 +4,6 @@ import net.azib.ipscan.config.LoggerFactory;
 import net.azib.ipscan.config.Version;
 import net.azib.ipscan.core.UserErrorException;
 import net.azib.ipscan.di.Injector;
-import net.azib.ipscan.util.GoogleAnalytics;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.SWTException;
@@ -33,7 +32,6 @@ public class GUI implements AutoCloseable {
 		catch (SWTError e) {
 			if (e.getMessage().contains("gtk_init_check")) {
 				System.err.println(e.toString() + " - probably you are running as `root` and/or don't have access to the X Server. Please run as normal user or with sudo.");
-				new GoogleAnalytics().report(e);
 			}
 			else throw e;
 		}
@@ -68,7 +66,6 @@ public class GUI implements AutoCloseable {
 		messageBox.setText(title);
 		messageBox.setMessage(localizedMessage);
 		messageBox.open();
-		new GoogleAnalytics().report(localizedMessage, (Throwable) null);
 	}
 
 	@Override public void close() {

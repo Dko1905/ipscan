@@ -52,7 +52,7 @@ public class ScannerDispatcherThread extends Thread implements ThreadFactory, St
 		this.resultsCallback = resultsCallback;
 		
 		this.threadGroup = new ThreadGroup(getName());
-		this.threadPool = Executors.newFixedThreadPool(config.maxThreads, this);
+		this.threadPool = Executors.newCachedThreadPool(this);
 		
 		// this thread is daemon because we want JVM to terminate it
 		// automatically if user closes the program (Main thread, that is)
@@ -85,7 +85,7 @@ public class ScannerDispatcherThread extends Thread implements ThreadFactory, St
 					// make a small delay between thread creation
 					Thread.sleep(config.threadDelay);
 					
-					if ((numActiveThreads.intValue() < config.maxThreads)) {					
+					if (true) {
 						// retrieve the next IP address to scan
 						subject = feeder.next();
 						
